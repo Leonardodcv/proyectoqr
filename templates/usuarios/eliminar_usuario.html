@@ -1,0 +1,13 @@
+{% extends "index.html" %}
+{% block titulo %}
+Eliminar equipo
+{% endblock titulo %}
+{% block body %}
+<p align="right"><a href="{% url 'equipo:crear_prestamo' %}">Crear un nuevo equipo</a></p>
+    <form method="POST">
+        {% csrf_token %}
+        <h2>¿Desea eliminar el registro con numero serial:{{ usuario.id_usuario }}</h2>
+        <button type="submit">Eliminar</button>
+        <a href="{% url 'usuario:listar_usuarios' %}">Cancelar</a>
+    </form>
+{% endblock body %}

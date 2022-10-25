@@ -1,0 +1,77 @@
+{% extends "index.html" %}
+{% load static %}
+{% block titulo %}
+Listado de prestamos
+{% endblock titulo %}
+{% block body %}
+    <p align="right"><a href="{% url 'equipo:crear_prestamo' %}"><strong><font size=6><span class="badge badge-primary">Registrar nuevo prestamo</span></font></strong></a></p>
+    {% if prestamos %}    
+    <div class="content">
+        <div class="animated fadeIn">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title"><center><font color="#002f81" size=5>Prestamos registrados</center></font></strong>
+                        </div>
+                        <div class="card-body">
+                            <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                                <thead style=" background-color: #6777bc">
+                                    <tr>
+                                        <th><font color="white"><center>NS</center></font></th>
+                                        <th><font color="white"><center>Usuario</center></font></th>
+                                        <th><font color="white"><center>Fecha de entrega</center></font></th>
+                                        <th><font color="white"><center>Fecha de devolucion</center></font></th>
+                                        <th><font color="white"><center>Editar</center></font></th>
+                                        <th><font color="white"><center>Finalizar</center></font></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for prestamo in prestamos %}
+                                    <tr>
+                                        <th><a href="{% url 'equipo:listar_equipos'%}"><font color="#002f81"><center>{{ prestamo.ns }}</font></center></a></th>
+                                        <th><a href="{% url 'equipo:listar_usuarios'%}"><font color="#002f81"><center>{{ prestamo.id_usuario }}</font></center></a></th>
+                                        <th><font color="#002f81"><center>{{ prestamo.fecha_entrega }}</font></center></th>
+                                        <th><font color="#002f81"><center>{{ prestamo.fecha_devolucion }}</font></center></th>
+                                        {% if prestamo.recibido == False%}
+                                        <th><a href="{% url 'equipo:editar_prestamo' prestamo.id_historial %}">Editar</a></th>
+                                        <th><a href="{% url 'equipo:terminar_prestamo' prestamo.id_historial %}">Finalizar</a></th>
+                                        {% else %}
+                                        <th><font color="#002f81"><center>No hay cambios</font></center></th>
+                                        <th><font color="#002f81"><center>Devuelto</font></center></th>
+                                        {% endif %}
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% else %}
+        <h1>No hay prestamos registrados actualmente</h1>
+    {% endif %}
+
+    {% endblock body %}
+    {% block extrajs %}
+        <script src="{% static 'js/lib/data-table/datatables.min.js' %}"></script>
+        <script src="{% static 'js/lib/data-table/dataTables.bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/lib/data-table/dataTables.buttons.min.js' %}"></script>
+        <script src="{% static 'js/lib/data-table/buttons.bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/lib/data-table/jszip.min.js' %}"></script>
+        <script src="{% static 'js/lib/data-table/vfs_fonts.js' %}"></script>
+        <script src="{% static 'js/lib/data-table/buttons.html5.min.js' %}"></script>
+        <script src="{% static 'js/lib/data-table/buttons.print.min.js' %}"></script>
+        <script src="{% static 'js/lib/data-table/buttons.colVis.min.js' %}"></script>
+        <script src="{% static 'js/init/datatables-init.js' %}"></script>
+    
+        <script type="text/javascript">
+            $(document).ready(function() {
+            $('#bootstrap-data-table-export').DataTable();
+        } );
+        </script>
+    {% endblock extrajs %}

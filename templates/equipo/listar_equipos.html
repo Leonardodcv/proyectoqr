@@ -1,0 +1,94 @@
+{% extends "index.html" %}
+{% load static %}
+
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+
+{% block titulo %}
+Listado de autores
+{% endblock titulo %}
+{% block body %}
+<p align="right"><a href="{% url 'equipo:crear_equipo' %}"><font size=5><span class="badge badge-primary">Crear un nuevo equipo</span></font></a></p>
+    {% if equipos %}     
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title"><center><font color="#002f81" size=5>Equipos registrados actualmente</center></font></strong>
+                        </div>
+                        <div class="card-body">
+                            <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                                <thead style=" background-color: #6777bc">
+                                    <tr>
+                                        <th><center><font color="white">NS</font></center></th>
+                                        <th><center><font color="white">Modelo</font></center></th>
+                                        <th><center><font color="white">Disco duro</font></center></th>
+                                        <th><center><font color="white">RAM</font></center></center></th>
+                                        <th><center><font color="white">IP</font></center></th>
+                                        <th><center><font color="white">Basura electronica</font></center></th>
+                                        <th><center><font color="white">Editar</font></center></th>
+                                        <th><center><font color="white">Eliminar</font></center></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for equipo in equipos %}
+                                    <tr>
+                                        <th><font color="#002f81"><center>{{ equipo.ns }}</font></center></th>
+                                        <th><font color="#002f81"><center>{{ equipo.id_modelo }}</font></center></th>
+                                        <th><font color="#002f81"><center>{{ equipo.discoDuro }}</font></center></th>
+                                        <th><font color="#002f81"><center>{{ equipo.ram }}</font></center></th>
+                                        <th><font color="#002f81"><center>{{ equipo.ip_numero }}</font></center></th>
+                                        {% if equipo.basura_electronica == False%}
+                                        <th><font color="#002f81"><center>Equipo utilizable</font></center></th>
+                                        {% else %}
+                                        <th><font color="#002f81"><center>Equipo reciclable</font></center></th>
+                                        {% endif %}
+                                        <th><center><a href="{% url 'equipo:editar_equipo' equipo.ns %}">Editar</a></center></th>
+                                        <th><center><a href="{% url 'equipo:eliminar_equipo' equipo.ns %}">Eliminar</a></center></th>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+    {% else %}
+        <h1>No hay equipos registrados actualmente</h1>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="card">
+            <div class="card-header">
+                <strong>Formulario de registros</strong>
+            </div>
+        {% if error %}
+            <h2>{{ error }}</h2>
+        {% else %}
+            <div class="card-body card-block">
+            {{ form.as_p }}    
+            <button type="submit">Guardar</button>
+        </div>
+        {% endif %}
+    </form>
+
+{% endblock body %}
+{% block extrajs %}
+    <script src="{% static 'js/lib/data-table/datatables.min.js' %}"></script>
+    <script src="{% static 'js/lib/data-table/dataTables.bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/lib/data-table/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'js/lib/data-table/buttons.bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/lib/data-table/jszip.min.js' %}"></script>
+    <script src="{% static 'js/lib/data-table/vfs_fonts.js' %}"></script>
+    <script src="{% static 'js/lib/data-table/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'js/lib/data-table/buttons.print.min.js' %}"></script>
+    <script src="{% static 'js/lib/data-table/buttons.colVis.min.js' %}"></script>
+    <script src="{% static 'js/init/datatables-init.js' %}"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+        $('#bootstrap-data-table-export').DataTable();
+    } );
+    </script>
+{% endblock extrajs %}

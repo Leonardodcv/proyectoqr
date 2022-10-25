@@ -1,0 +1,11 @@
+{% extends "index.html" %}
+{% block titulo %}
+Terminar prestamo
+{% endblock titulo %}
+{% block body %}
+    <form method="post">
+        {% csrf_token %}
+        <p><strong>¿Recibio la computadora con  {{ object.ns }}?</strong></p>
+        <button type="submit" class="btn btn-danger">Confirmar</button>
+    </form>
+{% endblock body %}

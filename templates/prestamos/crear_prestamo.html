@@ -1,0 +1,79 @@
+{% extends "index.html" %}
+{% block titulo %}
+Crear nuevo prestamo
+{% endblock titulo %}
+{% block body %}
+    <form method="POST">
+        {% csrf_token %}
+        {% if error %}
+        <h2>{{ error }}</h2>
+        {% else %}
+        {{ form.as_p }}
+        <button type="submit">Crear</button>
+    </form>
+        <!--
+            <label for="id_ns">Ns:</label>
+            <select name="ns" required id="id_ns">
+                <option value="" selected>---------</option>
+                <option value="1Q1W2E3">1Q1W2E3 inspiron</option>
+                <option value="DSA321D">DSA321D inspiron</option>
+            </select>
+        </p>
+        
+        <p>
+            <label for="id_id_usuario">Id usuario:</label>
+            <select name="id_usuario" required id="id_id_usuario">
+                <option value="" selected>---------</option>
+                <option value="1">Leonardo Daniel Carrasco Velazquez</option>
+                <option value="2">Aurelio</option>
+            </select>
+        </p>
+        
+        <p>
+            <label for="id_fecha_devolucion">Fecha de devolucion:</label>
+            <input type="text" name="fecha_devolucion" required id="id_fecha_devolucion">
+        </p>
+          
+        <p>
+            <label for="id_qr_code">Qr code:</label>
+            <input type="file" name="qr_code" accept="image/*" required id="id_qr_code">
+        </p>
+
+        <button type="submit">Crear</button>
+            <button type="submit">Crear</button>
+        {% endif %}
+    
+    <!--<div class="col-md-6">
+        <button type="button" class="btn btn-primary btn-lg" onclick="registrarReserva();">Reservar computadora</button>
+
+    </div>-->
+{% endblock body %}
+{% block extrajs %}
+<!--
+<script type="text/javascript">
+    function registrarReserva(){
+        data = {
+            'usuario': "{{ request.user.id }}",
+            'libro':"{{ object.id }}",
+            csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val()
+        }
+        $.ajax({
+            data:data,
+            url:"{% url 'equipo:crear_prestamo' %}",
+            type: 'POST',
+            success:function(response){
+                notificacionSuccess(response.mensaje);
+                window.location.href = response.url;
+            },
+            error:function(error){
+                notificacionError(error.responseJSON.mensaje);
+            }
+        });
+    }
+
+
+
+
+</script> -->
+{% endblock extrajs %}
+

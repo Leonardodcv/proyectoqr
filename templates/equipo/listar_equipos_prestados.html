@@ -1,0 +1,79 @@
+{% extends "index.html" %}
+{% load static %}
+{% block titulo %}
+Listado de autores
+{% endblock titulo %}
+{% block body %} 
+<p align="right"><a href="{% url 'equipo:crear_equipo' %}"><strong><font size=5>Crear un nuevo equipo</font></strong></a></p>
+    {% if equipos %}
+    <div class="content">
+        <div class="animated fadeIn">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title"><center><font color="#002f81" size=5>Equipos prestados actualmente</font></strong></strong>
+                        </div>
+                        <div class="card-body">
+                            <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                                <thead style=" background-color: #6777bc">
+                                    <tr>
+                                        <th><center><font color="white">NS</font></center></th>
+                                        <th><center><font color="white">Modelo</font></center></th>
+                                        <th><center><font color="white">Disco duro</font></center></th>
+                                        <th><center><font color="white">RAM</font></center></center></th>
+                                        <th><center><font color="white">IP</font></center></th>
+                                        <th><center><font color="white">Basura electronica</font></center></th>
+                                        <th><center><font color="white">Editar</font></center></th>
+                                        <th><center><font color="white">Eliminar</font></center></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for equipo in equipos %}
+                                    <tr>
+                                        <th><font color="#002f81"><center>{{ equipo.ns }}</font></center></th>
+                                        <th><font color="#002f81"><center>{{ equipo.id_modelo }}</font></center></th>
+                                        <th><font color="#002f81"><center>{{ equipo.discoDuro }}</font></center></th>
+                                        <th><font color="#002f81"><center>{{ equipo.ram }}</font></center></th>
+                                        <th><font color="#002f81"><center>{{ equipo.ip_numero }}</font></center></th>
+                                        {% if equipo.basura_electronica == False%}
+                                        <th><font color="#002f81"><center>Equipo utilizable</font></center></th>
+                                        {% else %}
+                                        <th><font color="#002f81"><center>Equipo reciclable</font></center></th>
+                                        {% endif %}
+                                        <th><center><a href="{% url 'equipo:editar_equipo' equipo.ns %}">Editar</a></center></th>
+                                        <th><center><a href="{% url 'equipo:eliminar_equipo' equipo.ns %}">Eliminar</a></center></th>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+        <h1>No hay equipos prestados actualmente</h1>
+    {% endif %}
+
+{% endblock body %}
+{% block extrajs %}
+    <script src="{% static 'js/lib/data-table/datatables.min.js' %}"></script>
+    <script src="{% static 'js/lib/data-table/dataTables.bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/lib/data-table/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'js/lib/data-table/buttons.bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/lib/data-table/jszip.min.js' %}"></script>
+    <script src="{% static 'js/lib/data-table/vfs_fonts.js' %}"></script>
+    <script src="{% static 'js/lib/data-table/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'js/lib/data-table/buttons.print.min.js' %}"></script>
+    <script src="{% static 'js/lib/data-table/buttons.colVis.min.js' %}"></script>
+    <script src="{% static 'js/init/datatables-init.js' %}"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+        $('#bootstrap-data-table-export').DataTable();
+    } );
+    </script>
+{% endblock extrajs %}

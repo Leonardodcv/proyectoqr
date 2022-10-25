@@ -1,0 +1,11 @@
+{% extends "index.html" %}
+{% block titulo %}
+Baja de un empleado
+{% endblock titulo %}
+{% block body %}
+    <form method="post">
+        {% csrf_token %}
+        <p><strong>¿Desea dar de baja al empleado {{ object }}?</strong></p>
+        <button type="submit" class="btn btn-danger">Confirmar</button>
+    </form>
+{% endblock body %}

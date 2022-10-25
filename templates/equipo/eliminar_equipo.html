@@ -1,0 +1,12 @@
+{% extends "index.html" %}
+{% block titulo %}
+Eliminar equipo
+{% endblock titulo %}
+{% block body %}
+    <form method="POST">
+        {% csrf_token %}
+        <h2>¿Desea eliminar el registro con numero serial:{{ equipo.id_usuario }}</h2>
+        <button type="submit">Eliminar</button>
+        <a href="{% url 'equipo:listar_prestamos' %}">Cancelar</a>
+    </form>
+{% endblock body %}

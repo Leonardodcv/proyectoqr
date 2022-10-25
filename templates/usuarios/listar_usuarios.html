@@ -1,0 +1,87 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block titulo %}
+Listado de usuario
+{% endblock titulo %}
+{% block body %}
+    <p align="right"><a href="{% url 'equipo:crear_usuario' %}"><font size=6><span class="badge badge-primary">Dar de alta nuevo usuario</span></font></a></p>
+    {% if usuarios %}     
+    <div class="content">
+        <div class="animated fadeIn">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title"><font color="#002f81" size=5><center>Usuarios registrados actualmente</center></font></strong>
+                        </div>
+                        <div class="card-body">
+                            <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                                <thead style=" background-color: #6777bc">
+                                    <tr>
+                                        <th><font color="white"><center>#</center></font></th>
+                                        <th><font color="white"><center>Nombre</center></font></th>
+                                        <th><font color="white"><center>Departamento</center></font></th>
+                                        <th><font color="white"><center>Puesto</center></font></th>
+                                        <th><font color="white"><center>Allow</center></font></th>
+                                        <th><font color="white"><center>Empleado</center></font></th>
+                                        <th><font color="white"><center>Editar</center></font></th>
+                                        <th><font color="white"><center>Eliminar</center></font></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for usuario in usuarios %}
+                                        <tr>
+                                            <th><font color="#002f81"><center>{{ usuario.id_usuario }}</center></font></th>
+                                            <th><font color="#002f81"><center>{{ usuario.nombre }}</center></font></th>
+                                            <th><font color="#002f81"><center>{{ usuario.id_departamento }}</center></font></th>
+                                            <th><font color="#002f81"><center>{{ usuario.puesto }}</center></font></th>
+
+                                            {% if usuario.allow %}
+                                            <th><font color="#002f81"><center>Permitido</center></font></th>
+                                            {% else %}
+                                            <th><font color="#002f81"><center>No permitido</center></font></th>
+                                            {% endif %}
+
+                                            {% if usuario.activo %}
+                                            <th><font color="#002f81"><center>Activo</center></font></th>
+                                            {% else %}
+                                            <th><font color="#002f81"><center>Baja</center></font></th>
+                                            {% endif %}
+                                            <th><a href="{% url 'equipo:editar_usuario' usuario.id_usuario %}"><center>Editar</a></th>
+                                            <th><a href="{% url 'equipo:eliminar_usuario' usuario.id_usuario %}"><center>Eliminar</a></th>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% else %}
+        <h1>No hay prestamos en curso</h1>
+    {% endif %}
+
+{% endblock body %}
+{% block extrajs %}
+    <script src="{% static 'js/lib/data-table/datatables.min.js' %}"></script>
+    <script src="{% static 'js/lib/data-table/dataTables.bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/lib/data-table/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'js/lib/data-table/buttons.bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/lib/data-table/jszip.min.js' %}"></script>
+    <script src="{% static 'js/lib/data-table/vfs_fonts.js' %}"></script>
+    <script src="{% static 'js/lib/data-table/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'js/lib/data-table/buttons.print.min.js' %}"></script>
+    <script src="{% static 'js/lib/data-table/buttons.colVis.min.js' %}"></script>
+    <script src="{% static 'js/init/datatables-init.js' %}"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+        $('#bootstrap-data-table-export').DataTable();
+    } );
+    </script>
+{% endblock extrajs %}

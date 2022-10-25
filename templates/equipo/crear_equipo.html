@@ -1,0 +1,23 @@
+{% extends "index.html" %}
+{% block titulo %}
+Eliminar equipo
+{% endblock titulo %}
+{% block body %}
+    <form method="POST">
+        {% csrf_token %}
+        <div class="card">
+            <div class="card-header">
+                <strong>Formulario de registros</strong>
+            </div>
+            div
+        {% if error %}
+            <h2>{{ error }}</h2>
+        {% else %}
+            <div class="card-body card-block">
+            {{ form.as_p }}
+            </div>
+            <button type="submit">Crear</button>
+        {% endif %}
+    </form>
+{% endblock body %}
+
